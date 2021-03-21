@@ -11,12 +11,13 @@ public class StockDemo {
 
     public int maxProfit(int[] prices) {
         int total = 0;
+
         if (prices.length <= 1) {
             return total;
         }
         for (int i = 0; i < prices.length - 1; i++) {
             int temp = prices[i + 1] - prices[i];
-            total += temp > 0 ? temp : 0;
+            total += Math.max(temp, 0);
         }
         return total;
     }

@@ -1,0 +1,19 @@
+1.kafka中的概念：broke;topic；partition;
+
+2. Kafka的分区器、拦截器、序列化器你了解吗？
+
+3. 消息的可靠性怎么保证？
+    1.生产者的可靠性保证：ACK机制-1,1,0
+    2.broker的可靠性保证：
+        ISR,通过维护HW，LEO保证数据的可用性和一致性；
+        lead 收到produce的消息，LEO+1;副本带着自己的HW和LEO去获取消息；
+        副本收到消息，LEO+1；
+        lead 得到所有副本反馈，更新自己的HW；HW=min(all followers)
+        follower同步lead的HW;
+        lead的checkpoint机制，broke会缓存这块信息，follow在未收到lead同步HW之前故障且被重新选为主是，会从checkpoint读取最新HW
+    3.consumer的可靠性保证：
+        1.auto.commit：最多一次；
+        2.手动维护：最少一次；
+        3.Exactly once；
+
+4.

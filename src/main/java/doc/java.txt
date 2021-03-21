@@ -51,6 +51,7 @@
 
 9.多线程：
        线程的生命周期：NEW RUNNABLE,BLOCKED,WAITING,TIMED_WAITING,TERMINATED;
+       sleep和wait方法区别
 
 10.线程池有用到过吗？怎么用的，jdk有提供那些线程池（总共提供了四种）？,线程池的参数？
 

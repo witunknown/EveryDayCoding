@@ -1,0 +1,20 @@
+1.Uninon 跟uninon all 的区别
+    uninon all 多个查询结果拼接；uninon all结果不会去重；uninon 结果去重
+
+2.Hive 的开窗函数 rank() 和row_number()的区别？
+       rank()中的排名：1,2,2,4 row_number():1,2,3,4
+
+3. distribute by 、sort by 、cluster by 、order by 区别？
+    order by:一个reduce进行排序，全局排序；
+    sort by:sort by 只能保证每个reduce有序，不能保证全局有序；
+    distribute by:分桶；
+    cluster by=distribute by+sort by
+
+4.join的使用:left join，right join,full join;
+
+5. sql的执行顺序
+
+6.count(distinct)和group by 之后在count的区别？
+   count(distinct) 只有一个reduce在执行；原理：需要distinct的数据发放一个reduce,reduce使用hashSet去重
+   group by则会在map端先去重,且会产生多个job;
+
