@@ -28,7 +28,7 @@ public class ZigzagLevelOrderDemo {
         Stack<TreeNode> stack = new Stack<>();
         ArrayList<ArrayList<Integer>> finalList = new ArrayList<>();
         stack.push(root);
-        boolean pushLeftChild = true;
+        boolean firstPushLeftChild = true;
         while (!stack.isEmpty()) {
             ArrayList<Integer> currentFloorList = new ArrayList<>();
             Stack<TreeNode> currentFloorStack = new Stack<>();
@@ -38,7 +38,7 @@ public class ZigzagLevelOrderDemo {
                     continue;
                 }
                 currentFloorList.add(node.val);
-                if (pushLeftChild) {
+                if (firstPushLeftChild) {
                     currentFloorStack.push(node.left);
                     currentFloorStack.push(node.right);
                 } else {
@@ -46,7 +46,7 @@ public class ZigzagLevelOrderDemo {
                     currentFloorStack.push(node.left);
                 }
             }
-            pushLeftChild = !pushLeftChild;
+            firstPushLeftChild = !firstPushLeftChild;
             if (currentFloorList.size() > 0) {
                 finalList.add(currentFloorList);
             }
