@@ -18,3 +18,26 @@
    count(distinct) 只有一个reduce在执行；原理：需要distinct的数据发放一个reduce,reduce使用hashSet去重
    group by则会在map端先去重,且会产生多个job;
 
+7.Hive中的外部表和内部表的区别：
+    1.创建内部表的时候，会将数据移动到数据仓库指向的路径，创建外部表的时候，仅记录数据所在的位置，不对数据做任何的该表；
+    2.删除外部表的时候，只是删除元数据，不会删除数据，删除内部表的时候，元数据和数据都会被删除。
+
+8.map端join: small_table a left join big_table b
+           在task中：small_table 转换成hashTable本地写文件，然后加载进分布式内存；big_table 大表加载，然后Map端直接在hashTable中匹配输出文件
+
+9.map端聚合：
+
+10.一般优化思路：
+    1.	map数量的控制：合并和拆分小文件；
+    2.	reduce数量控制：调整每个reduce数据的大小；直接设置reduce的数量；（reduce过多，小文件过多；reduce过少，数据处理慢，甚至OOM）;
+    3.	设置小文件合并参数：
+    hive.merge.mapfiles=true
+    hive.merge.mapredfiles=false
+    hive.merge.size.per.task=256*1000*1000
+    2.	Hive SQL优化；
+    1.	列裁决；
+    2.	分区裁剪；
+    3.	MapSide Join（小表join大表）;分桶
+    3.GroupBY：map端聚合；数据倾斜时负载均衡（hive.groupby.skewindata = true）；
+    4.分桶：cluster By; distribute by + sort by: 分桶;order by；
+    5.存储ORC格式；Parquet格式,列式存储
