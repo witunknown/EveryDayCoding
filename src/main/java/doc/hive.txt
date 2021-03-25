@@ -11,6 +11,7 @@
     cluster by=distribute by+sort by
 
 4.join的使用:left join，right join,full join;
+    left join以左边为匹配
 
 5. sql的执行顺序
 
@@ -41,3 +42,7 @@
     3.GroupBY：map端聚合；数据倾斜时负载均衡（hive.groupby.skewindata = true）；
     4.分桶：cluster By; distribute by + sort by: 分桶;order by；
     5.存储ORC格式；Parquet格式,列式存储
+11. hive支持的文件格式：
+    1.textFile:行存储；磁盘开销大，解析困难，压缩无法合并；
+    2.sequencefile:二进制文件；kv形式序列化；可分割，压缩；和MR比较契合；
+    3.orc:列存储，列按行分块；压缩快
