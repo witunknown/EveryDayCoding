@@ -1,0 +1,30 @@
+1.项目中内存优化：
+    1.spark的内存模型：Storage,Execution,User Memory,Other；Storage+Execution=0.6;
+      Storage：存储broadcast,cache,persist等数据；
+      Execution:存储map，join,aggregate,shuffle
+      User Memory:存储RDD转化操作所需的数据，RDD的依赖等
+      system:执行程序自己预留的；
+
+    2.Off-heap Memory:只分配给Execution和Storage;
+    3.Execution和Storage之间的内存动态调整；（执行不够能释放存储，反之则不行）
+    4.Task的内存，Task共享同一executor的内存；每个task可用内存在1/2N~1/N之间；
+    5.spark.memory.offHeap.size 堆外内存
+      spark.executor.memoryOverhead =开始堆外内存+spark.memory.offHeap.size
+      spark.driver.memoryOverhead
+
+2.spark内存优化：
+    1.合理设置on-heapMemory和off-heapMemory;
+    2.executor num的大小设置；
+    3.RDD cache(),persist(); memory,disk,ser,2;
+    4.
+
+3.OOM问题：
+    1.driver:
+        程序定义了大对象，job结果返回driver，产生了大对象；
+        Spark UI缓存的计算信息；
+    2.Executor：
+        单个executor，数据spill磁盘时，内存释放不足会导致OOM;
+        堆外内存和堆内内存参数调节；
+        数据倾斜：1.重分区试图打散数据2.加前缀打散，先局部聚合，再全局聚合；3.自定义分区器；
+
+

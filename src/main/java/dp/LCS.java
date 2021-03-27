@@ -90,4 +90,63 @@ public class LCS {
 
         return str1.substring(index - max + 1, index + 1);
     }
+
+    public static String LCS2(String str1, String str2) {
+        if (str1.length() == 0 || str2.length() == 0) {
+            return null;
+        }
+
+        if (str1.length() == 1) {
+            if (str2.indexOf(str1.charAt(0)) > 0) {
+                return str1;
+            } else {
+                return null;
+            }
+        }
+
+        if (str2.length() == 1) {
+            if (str1.indexOf(str2.charAt(0)) > 0) {
+                return str2;
+            } else {
+                return null;
+            }
+        }
+
+        int[][] dp = new int[str1.length()][str2.length()];
+
+        for (int i = 0; i < str1.length(); i++) {
+            if (str1.charAt(i) == str2.charAt(0)) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = 0;
+            }
+        }
+
+        for (int i = 0; i < str2.length(); i++) {
+            if (str2.charAt(i) == str1.charAt(0)) {
+                dp[0][i] = 1;
+            } else {
+                dp[0][i] = 0;
+            }
+        }
+
+        int max = 0;
+        int index = 0;
+        for (int i = 1; i < str1.length(); i++) {
+            for (int j = 1; j < str2.length(); j++) {
+                if (str1.charAt(i) == str2.charAt(j)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = 0;
+                }
+                if (dp[i][j] > max) {
+                    max = dp[i][j];
+                    index = i;
+                }
+            }
+        }
+
+        index++;
+        return str1.substring(index - max, index);
+    }
 }
