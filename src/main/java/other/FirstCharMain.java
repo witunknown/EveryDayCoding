@@ -16,6 +16,15 @@ public class FirstCharMain {
     }
 
 
+    /*/**
+     * @title firstChar
+     * @description 
+     * @author admin 
+ * @param: str
+     * @updateTime 2021/3/27 23:45
+ * @return: int
+     * @throws 
+     */
     public static int firstChar(String str) {
         if (str == null || str.length() == 0) {
             return -1;
