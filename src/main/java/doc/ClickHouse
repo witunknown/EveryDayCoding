@@ -1,0 +1,30 @@
+存储：
+1.主键索引；稀疏索引；数据Sharding
+2.数据Partition;数据TTL;高吞吐（顺序写，合并，异步修改删除）
+3.主备同步
+计算：
+1. 多核并行；单查询根据数据分区，再分段并行查；
+2.分布式计算：存在副本时，计算task可以分发到不同的节点；
+3.向量化执行；
+库引擎：
+1.MySql引擎：
+    CREATE TABLE [IF NOT EXISTS] [db.]table_name [ON CLUSTER cluster]
+    (
+        name1 [type1] [DEFAULT|MATERIALIZED|ALIAS expr1] [TTL expr1],
+        name2 [type2] [DEFAULT|MATERIALIZED|ALIAS expr2] [TTL expr2],
+        ...
+    ) ENGINE = MySQL('host:port', 'database', 'table', 'user', 'password'[, replace_query, 'on_duplicate_clause']);
+2.
+表引擎：
+    MergeTree
+    ReplacingMergeTree:可去重，ReplacingMergeTree在去除重复数据时，是以ORDERBY排序键为基准的，而不是PRIMARY KEY。
+    SummingMergeTree：聚合操作：SummingMergeTree(salary)；用ORBER BY排序键作为聚合数据的条件Key。即如果排序key是相同的，则会合并成一条数据，并对指定的合并字段进行聚合。
+    Aggregatingmergetree：指定聚合函数：AggregateFunction(sum,Decimal32(2))；通常作为物化视图的标引擎；
+    CollapsingMergeTree：以增代删，写入 sign=1;删除sign=-1;合并时综合；（问题：顺序保证，多线程下无法工作）
+    VersionedCollapsingMergeTree：代版本的CollapsingMergeTree标
+
+其他引擎：
+Memory;Distributed;
+
+
+
